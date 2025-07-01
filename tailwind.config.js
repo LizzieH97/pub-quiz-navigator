@@ -1,21 +1,39 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  daisyui: {
+    themes: ["light", "dark"],
+  },
   theme: {
     extend: {
       colors: {
-        olive: "#627C4C",
-        cream: "#FFD5B3",
-        tomato: "#A62F03",
-        maroon: "#731B07",
-        teal: "#316760",
+        olive: "#6B784C",
+        cream: "#F2B950",
+        beige: "#BF7C2A",
+        maroon: "#592202",
+        teal: "#28402A",
+        bark: "#261201",
+      },
+      fontFamily: {
+        schoolbell: ["var(--font-schoolbell)"],
+      },
+      fontWeight: {
+        extrabold: 800,
+      },
+      keyframes: {
+        "scroll-left": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
     },
-    plugins: [
-      require("tailwind-scrollbar"),
-      require("tailwind-scrollbar-hide"),
-      require("daisyui"),
-      require("@tailwindcss/forms"),
-    ],
+    animation: {
+      "scroll-left": "scroll-left 30s linear infinite",
+    },
   },
+  plugins: [require("daisyui"), require("@tailwindcss/forms")],
 };
