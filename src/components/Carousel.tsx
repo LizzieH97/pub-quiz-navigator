@@ -14,17 +14,19 @@ type CarouselProps = {
 
 export default function Carousel({ pubs }: CarouselProps) {
   const loopItems = [...pubs, ...pubs];
+
   return (
-    <div className="relative w-full overflow-hidden rounded-box">
-      <div className="flex w-max animate-scroll-left">
+    <div className="relative w-full overflow-hidden group">
+      <div className="flex w-max animate-scroll-left group-hover:[animation-play-state:paused]">
         {loopItems.map((pub, index) => (
-          <div key={index} className="w-64 shrink-0 px-2 ">
+          <div key={index} className="shrink-0 px-2">
             <PubCard
               name={pub.name}
               pic={pub.pic}
               day={pub.day}
               address={pub.address}
               area={pub.area}
+              variant="small"
             />
           </div>
         ))}

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nivo/line": "^0.87.0",
+    "@react-google-maps/api": "^2.20.7",
     "@supabase/ssr": "^0.5.1",
     "@supabase/supabase-js": "^2.45.4",
     "chart.js": "^4.4.4",
