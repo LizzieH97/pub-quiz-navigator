@@ -5,7 +5,7 @@ import "./globals.css";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Carousel from "@/components/Carousel";
-import { fetchPubs } from "../../lib/api";
+import { fetchPubs } from "../lib/api";
 import NavBar from "@/components/NavBar";
 
 const schoolbell = Schoolbell({

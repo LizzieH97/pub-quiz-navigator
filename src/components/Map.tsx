@@ -2,7 +2,7 @@
 
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
-import { geocodeAddress } from "../../lib/geocode";
+import { geocodeAddress } from "../lib/geocode";
 
 type Pub = {
   name: string;
@@ -24,6 +24,7 @@ const defaultCenter = {
 };
 
 export default function PubMap({ pubs }: MapProps) {
+  const libraries: "places"[] = ["places"];
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
   });

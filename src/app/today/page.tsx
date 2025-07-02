@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { fetchPubs } from "../../../lib/api";
+import { fetchPubs } from "../../lib/api";
 import PubCard from "@/components/PubCard";
 import Carousel from "@/components/Carousel";
 
@@ -47,6 +47,7 @@ export default function Today() {
               day={pub.day}
               address={pub.address}
               area={pub.area}
+              rating={pub.rating}
               variant="large"
             />
           </div>

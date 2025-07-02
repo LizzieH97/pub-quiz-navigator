@@ -1,9 +1,12 @@
+import ReadOnlyRating from "./ReadOnlyRating";
+
 type PubProps = {
   name: string;
   pic: string;
   day: string;
   address: string;
   area: string;
+  rating: number;
   variant?: "small" | "large";
 };
 
@@ -13,6 +16,7 @@ export default function PubCard({
   day,
   address,
   area,
+  rating,
   variant = "large",
 }: PubProps) {
   const isSmall = variant === "small";
@@ -62,6 +66,9 @@ export default function PubCard({
           <div className="absolute -z-10 left-0 w-64 h-16 opacity-0 duration-500 hover:bg-cream/70"></div>
           <span className="text-xl font-bold text-bark bg-cream/70 p-1">
             {name}
+            <div>
+              <ReadOnlyRating rating={rating} size={isSmall ? "sm" : "lg"} />
+            </div>
           </span>
           <span className="hover:opacity-100 w-64 h-24 duration-500 opacity-0 text-bark p-5">
             <br />
