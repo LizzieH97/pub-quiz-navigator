@@ -3,7 +3,7 @@ import Title from "@/components/Title";
 import { useEffect, useState } from "react";
 import { fetchPubs } from "../lib/api";
 import Carousel from "@/components/Carousel";
-import Map from "@/components/Map";
+import Map from "@/components/PubsMap";
 import { useAllPubs } from "@/hooks/useAllPubs";
 
 export default function Home() {

@@ -16,21 +16,25 @@ export default function ReadOnlyRating({
     return (
       <div
         key={i}
-        className={`mask mask-star ${
-          isFull
-            ? "bg-teal"
-            : isHalf
-            ? "bg-teal opacity-50"
-            : "bg-teal opacity-90"
-        }`}
+        className={`mask mask-star bg-teal ${
+          isFull ? "" : isHalf ? "opacity-50" : "opacity-20"
+        } ${getSizeClass(size)}`}
         aria-label={`${starNumber} star`}
         aria-current={rating === starNumber ? "true" : undefined}
       ></div>
     );
   });
 
-  const sizeClass =
-    size === "sm" ? "rating-sm" : size === "lg" ? "rating-lg" : "rating"; // default (md)
+  return <div className="rating">{stars}</div>;
+}
 
-  return <div className={`${sizeClass}`}>{stars}</div>;
+function getSizeClass(size: "sm" | "md" | "lg") {
+  switch (size) {
+    case "sm":
+      return "w-4 h-4 p-0 m-0";
+    case "lg":
+      return "w-6 h-6 p-0 m-0";
+    default:
+      return "w-5 h-5 p-0 m-0";
+  }
 }

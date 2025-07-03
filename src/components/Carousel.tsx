@@ -6,6 +6,8 @@ type Pub = {
   day: string;
   address: string;
   area: string;
+  id: number;
+  rating: number;
 };
 
 type CarouselProps = {
@@ -26,6 +28,8 @@ export default function Carousel({ pubs }: CarouselProps) {
               day={pub.day}
               address={pub.address}
               area={pub.area}
+              id={pub.id}
+              rating={pub.rating}
               variant="small"
             />
           </div>

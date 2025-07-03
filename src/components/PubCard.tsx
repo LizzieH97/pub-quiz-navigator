@@ -1,4 +1,6 @@
+import { DiJava } from "react-icons/di";
 import ReadOnlyRating from "./ReadOnlyRating";
+import Link from "next/link";
 
 type PubProps = {
   name: string;
@@ -7,6 +9,7 @@ type PubProps = {
   address: string;
   area: string;
   rating: number;
+  id: number;
   variant?: "small" | "large";
 };
 
@@ -17,6 +20,7 @@ export default function PubCard({
   address,
   area,
   rating,
+  id,
   variant = "large",
 }: PubProps) {
   const isSmall = variant === "small";
@@ -47,7 +51,7 @@ export default function PubCard({
   const addressLine = address.split(",");
   return (
     <div
-      className={`relative group cursor-pointer overflow-hidden duration-500  bg-beige text-black p-5 border-4 border-teal rounded-3xl ${
+      className={`relative group cursor-pointer overflow-hidden duration-500  bg-beige text-black px-5 py-1 border-4 border-teal rounded-3xl ${
         isSmall ? "w-64 h-32" : "w-64 h-auto"
       }`}
     >
@@ -64,20 +68,21 @@ export default function PubCard({
         </div>
         <div className="absolute w-56 left-0 p-5 -bottom-16 duration-500 hover:-translate-y-12 hover:bg-cream/70">
           <div className="absolute -z-10 left-0 w-64 h-16 opacity-0 duration-500 hover:bg-cream/70"></div>
-          <span className="text-xl font-bold text-bark bg-cream/70 p-1">
+          <div className="text-xl font-bold text-bark bg-cream/70 p-1">
             {name}
-            <div>
-              <ReadOnlyRating rating={rating} size={isSmall ? "sm" : "lg"} />
-            </div>
-          </span>
-          <span className="hover:opacity-100 w-64 h-24 duration-500 opacity-0 text-bark p-5">
-            <br />
-            Day: {day}
-            <br />
-            Address: {addressLine[0]}
-            <br />
-            Click for more info!
-          </span>
+          </div>
+          <div className="w-60">
+            <ReadOnlyRating rating={rating} size={isSmall ? "sm" : "lg"} />
+          </div>
+          <Link href={`/pub/${id}`}>
+            <span className="hover:opacity-100 w-64 h-24 duration-500 opacity-0 text-bark p-0">
+              Day: {day}
+              <br />
+              Address: {addressLine[0]}
+              <br />
+              Click for more info!
+            </span>
+          </Link>
         </div>
       </div>
     </div>

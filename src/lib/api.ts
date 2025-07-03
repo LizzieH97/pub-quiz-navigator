@@ -12,6 +12,16 @@ export async function fetchPubsByDate(day: String) {
     .select("*")
     .eq("day", day);
   if (error) throw new Error(error.message);
-  console.log(data);
+
+  return data;
+}
+export async function fetchPubById(id: number) {
+  const { data, error } = await supabase
+    .from("pub-list")
+    .select("*")
+    .eq("id", id)
+    .single();
+  if (error) throw new Error(error.message);
+
   return data;
 }

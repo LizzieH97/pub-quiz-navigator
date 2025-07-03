@@ -34,6 +34,15 @@ module.exports = {
     animation: {
       "scroll-left": "scroll-left 30s linear infinite",
     },
+    safelist: [
+      "mask-star",
+      "mask",
+      "rating",
+      "rating-sm",
+      "rating-md",
+      "rating-lg",
+      "bg-teal",
+    ],
   },
   plugins: [require("daisyui"), require("@tailwindcss/forms")],
 };
