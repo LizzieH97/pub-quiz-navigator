@@ -43,6 +43,7 @@ export default function Today() {
           <div key={index} className="m-5">
             <PubCard
               name={pub.name}
+              id={pub.id}
               pic={pub.pic}
               day={pub.day}
               address={pub.address}

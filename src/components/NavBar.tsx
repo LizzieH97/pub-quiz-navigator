@@ -1,6 +1,8 @@
+import { useUserProfile } from "@/hooks/useUserProfile";
 import Link from "next/link";
 
 export default function NavBar() {
+  const { profile, signOut } = useUserProfile();
   const buttonStyling =
     "bg-bark h-8 text-xl text-cream rounded-xl border-4 border-teal flex items-center justify-center";
   return (
@@ -16,9 +18,25 @@ export default function NavBar() {
       <li className={buttonStyling}>
         <Link href="nearyou">Quizzes near you</Link>
       </li>
-      <li className={buttonStyling}>
-        <a>Item 3</a>
-      </li>
+      {profile ? (
+        <>
+          <li className={buttonStyling}>
+            <Link href="/account">Your Account</Link>
+          </li>
+          <li className={buttonStyling}>
+            <button onClick={signOut}>Sign out</button>
+          </li>
+        </>
+      ) : (
+        <>
+          <li className={buttonStyling}>
+            <Link href="/signup"> Sign up! </Link>
+          </li>
+          <li className={buttonStyling}>
+            <Link href="signin">Sign in</Link>
+          </li>
+        </>
+      )}
     </ul>
   );
 }

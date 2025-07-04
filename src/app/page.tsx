@@ -1,13 +1,14 @@
 "use client";
 import Title from "@/components/Title";
-import { useEffect, useState } from "react";
-import { fetchPubs } from "../lib/api";
+
 import Carousel from "@/components/Carousel";
 import Map from "@/components/PubsMap";
 import { useAllPubs } from "@/hooks/useAllPubs";
+import { useUserProfile } from "@/hooks/useUserProfile";
 
 export default function Home() {
   const { allPubs, loading, error } = useAllPubs();
+  const { profile } = useUserProfile();
   return (
     <div className=" min-h-screen pb-2 sm:p-1 font-[family-name:var(--font-schoolbell)] bg-bark">
       <Carousel pubs={allPubs} />
@@ -17,12 +18,19 @@ export default function Home() {
             <Title />
           </div>
           <span className="text-2xl px-7 col-start-3 col-end-7 row-start-1 row-end-3 text-white mt-8 m-4 p-2 bg-black/30 border-8 border-teal">
-            Hi! I'm Lizzie and I am a massive quiz lover. I have always had an
-            issue with pub quizzes - why is there so little information about
-            days and locations on the internet? So I decided to fix that myself
-            - here's a pub quiz locator for the Liverpool City Region! We have
-            all the information you'll need to find a pub quiz on a night that
-            suits you 🥳
+            {profile ? (
+              <span className="text-4xl">Hi {profile?.full_name}!! </span>
+            ) : (
+              <span className="text-4xl">Hi!! </span>
+            )}
+            <br />
+            <br />
+            I'm Lizzie and I am a massive quiz lover. I have always had an issue
+            with pub quizzes - why is there so little information about days and
+            locations on the internet? So I decided to fix that myself - here's
+            a pub quiz locator for the Liverpool City Region! We have all the
+            information you'll need to find a pub quiz on a night that suits you
+            🥳
             <br />
             <br />
             <span className="text-xl">
