@@ -1,8 +1,11 @@
+"use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { useUserProfile } from "@/hooks/useUserProfile";
 
 export default function SignInForm() {
+  const router = useRouter();
   const { signIn, error, isAuthenticated, profile } = useUserProfile();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,8 +18,14 @@ export default function SignInForm() {
       return;
     }
 
-    console.log("Trying to sign in with", email, password);
-    await signIn(email, password);
+    try {
+      await signIn(email, password);
+      // ✅ guaranteed refresh
+      window.location.href = "/";
+    } catch (err) {
+      console.error(err);
+      alert("Sign in failed!");
+    }
   };
 
   if (isAuthenticated && profile) {

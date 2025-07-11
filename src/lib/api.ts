@@ -99,3 +99,49 @@ export async function uploadAvatar(userId: string, file: File) {
 
   return { success: true, url: publicUrl };
 }
+export async function fetchReviewsByPubId(id: number) {
+  const { data, error } = await supabase
+    .from("reviews")
+    .select("*")
+    .eq("pub_id", id)
+    .order("created_at", { ascending: false });
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+export async function uploadReview(
+  userId: string,
+  name: string,
+  message: string,
+  rating: number,
+  pubId: number
+) {
+  if (!userId) {
+    console.error("No userId provided to uploadReview");
+    return { success: false, error: new Error("Please sign in first!") };
+  }
+
+  const { error } = await supabase.from("reviews").upsert(
+    [
+      {
+        user_id: userId, // include this if your table expects it!
+        name,
+        message,
+        rating,
+        pub_id: pubId,
+      },
+    ],
+    {
+      onConflict: "id", // or another unique key if you don't want to overwrite by default
+      // @ts-ignore: 'returning' is valid but not typed correctly
+      returning: "minimal",
+    }
+  );
+
+  if (error) {
+    console.error("Error uploading review:", error.message);
+    return { success: false, error };
+  }
+
+  return { success: true };
+}
