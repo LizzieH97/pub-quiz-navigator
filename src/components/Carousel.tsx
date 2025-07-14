@@ -29,7 +29,6 @@ export default function Carousel({ pubs }: CarouselProps) {
               address={pub.address}
               area={pub.area}
               id={pub.id}
-              rating={pub.rating}
               variant="small"
             />
           </div>
