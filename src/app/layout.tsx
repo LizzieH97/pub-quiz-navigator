@@ -1,11 +1,6 @@
-"use client";
-
 import { Chewy, Courier_Prime, Schoolbell } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import Carousel from "@/components/Carousel";
-import { fetchPubs } from "../lib/api";
+
 import NavBar from "@/components/NavBar";
 
 const schoolbell = Schoolbell({
@@ -13,6 +8,15 @@ const schoolbell = Schoolbell({
   subsets: ["latin"],
   variable: "--font-schoolbell",
 });
+
+// ✅ you CAN export metadata now
+export const metadata = {
+  title: "Pub Quiz Navigator",
+  description: "Find your next pub quiz!",
+  icons: {
+    icon: "/background.png",
+  },
+};
 
 export default function RootLayout({
   children,

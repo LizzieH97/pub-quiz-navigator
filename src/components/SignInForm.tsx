@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { useUserProfile } from "@/hooks/useUserProfile";
+import { supabase } from "@/lib/supabase";
 
 export default function SignInForm() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function SignInForm() {
 
     try {
       await signIn(email, password);
-      // ✅ guaranteed refresh
+
       window.location.href = "/";
     } catch (err) {
       console.error(err);
@@ -31,10 +32,30 @@ export default function SignInForm() {
   if (isAuthenticated && profile) {
     return (
       <div className=" flex flex-row items-center justify-around content-center m-5">
-        <h1 className="text-cream text-5xl"> Hi, {profile.full_name}!</h1>
+        <h1 className="text-cream text-5xl">
+          {" "}
+          Hi, {profile.full_name}! Sending you back to the homepage now...
+        </h1>
       </div>
     );
   }
+  const handleResetPassword = async () => {
+    if (!email) {
+      alert("Please enter your email to reset your password.");
+      return;
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/update-password`,
+    });
+
+    if (error) {
+      console.error(error);
+      alert("Error sending reset email: " + error.message);
+    } else {
+      alert("Password reset email sent! Check your inbox.");
+    }
+  };
 
   return (
     <div className="relative w-full max-w-md md:max-w-lg lg:max-w-xl flex items-center justify-center">
@@ -70,6 +91,13 @@ export default function SignInForm() {
               className="w-full rounded bg-bark text-cream p-3 border-teal border-4 rounded-3xl text-base md:text-lg font-bold hover:bg-bark"
             >
               Sign in!
+            </button>
+            <button
+              type="button"
+              onClick={handleResetPassword}
+              className="w-full text-center text-sm text-bark font-bold mt-2 bg-beige border-teal border-4 rounded-3xl p-2"
+            >
+              Forgot password?
             </button>
 
             <Link

@@ -11,6 +11,7 @@ type Pub = {
 
 type MapProps = {
   pubs: Pub[];
+  center: { lat: number; lng: number };
 };
 
 const containerStyle = {
@@ -18,13 +19,7 @@ const containerStyle = {
   height: "500px",
 };
 
-const defaultCenter = {
-  lat: 53.4084,
-  lng: -2.9916, // Liverpool
-};
-
-export default function PubMap({ pubs }: MapProps) {
-  const libraries: "places"[] = ["places"];
+export default function PubMap({ pubs, center }: MapProps) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
   });
@@ -41,21 +36,22 @@ export default function PubMap({ pubs }: MapProps) {
           return coords ? { name: pub.name, ...coords } : null;
         })
       );
-
       setLocations(locs.filter(Boolean) as any[]);
     };
 
-    fetchLocations();
+    if (pubs.length > 0) {
+      fetchLocations();
+    } else {
+      setLocations([]);
+    }
   }, [pubs]);
 
   if (!isLoaded) return <p>Loading map...</p>;
 
   return (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={defaultCenter}
-      zoom={13}
-    >
+    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={13}>
+      <Marker position={center} title="You" />
+
       {locations.map((loc, idx) => (
         <Marker
           key={idx}

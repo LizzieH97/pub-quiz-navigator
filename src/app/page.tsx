@@ -5,10 +5,13 @@ import Carousel from "@/components/Carousel";
 import Map from "@/components/PubsMap";
 import { useAllPubs } from "@/hooks/useAllPubs";
 import { useUserProfile } from "@/hooks/useUserProfile";
+import PubMap from "@/components/PubsMap";
+import { useState } from "react";
 
 export default function Home() {
   const { allPubs, loading, error } = useAllPubs();
   const { profile } = useUserProfile();
+  const center = { lat: 53.4084, lng: -2.9916 };
   return (
     <div className=" min-h-screen pb-2 sm:p-1 font-[family-name:var(--font-schoolbell)] bg-bark">
       <Carousel pubs={allPubs} />
@@ -45,7 +48,7 @@ export default function Home() {
             <h2 className="text-cream text-3xl">
               Want to find one near you? Check out the map below!
             </h2>
-            <Map pubs={allPubs} />
+            <PubMap pubs={allPubs} center={center} />
           </div>
         </section>
       </main>

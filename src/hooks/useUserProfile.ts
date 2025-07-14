@@ -87,12 +87,11 @@ export function useUserProfile() {
     }
   };
 
-  // Sign out method
   const signOut = async () => {
     await supabase.auth.signOut();
     setProfile(null); // Reset profile data
     setIsAuthenticated(false);
-    window.location.reload(); // Mark user as logged out
+    window.location.href = "/"; // Mark user as logged out
   };
 
   return { profile, loading, error, isAuthenticated, signIn, signOut };

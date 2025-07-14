@@ -4,7 +4,10 @@ import { updateProfile } from "../lib/api";
 import { supabase } from "../lib/supabase";
 import { uploadAvatar } from "../lib/api";
 
-export default function AfterSignUpForm() {
+type UpdateProps = {
+  title?: "start" | "update";
+};
+export default function AfterSignUpForm({ title = "start" }: UpdateProps) {
   const [userId, setUserId] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -12,7 +15,7 @@ export default function AfterSignUpForm() {
   const [full_name, setFull_Name] = useState("");
   const [bio, setBio] = useState("");
   const [avatar_url, setAvatar_url] = useState<File | null>(null);
-
+  const isStart = title === "start";
   useEffect(() => {
     const getUser = async () => {
       const {
@@ -30,7 +33,7 @@ export default function AfterSignUpForm() {
   }, []);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("AfterSignUpForm submitted"); // 🔍 must see this
+    console.log("AfterSignUpForm submitted");
     setError("");
     setSuccess(false);
 
@@ -70,7 +73,7 @@ export default function AfterSignUpForm() {
     }
 
     setSuccess(true);
-    setError(""); // Optional
+    setError("");
   };
 
   return (
@@ -85,7 +88,9 @@ export default function AfterSignUpForm() {
         <form className="text-cream w-full" onSubmit={handleSubmit}>
           <fieldset className="border-4 border-teal p-6 space-y-4">
             <legend className="px-2 font-bold text-lg md:text-xl mx-24 bg-teal border-beige border-4 rounded-3xl text-black">
-              Just need a few more details:
+              {isStart
+                ? "Just need a few more details:"
+                : "Let's update your profile!"}
             </legend>
             <input
               className="w-full bg-beige p-3 text-base md:text-lg rounded-3xl border-teal border-4 text-teal placeholder-bark "
