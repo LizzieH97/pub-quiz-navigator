@@ -29,7 +29,7 @@ export default async function AreaPage({
               day={pub.day}
               address={pub.address}
               area={pub.area}
-              rating={pub.rating}
+              id={pub.id}
               variant="large"
             />
           </li>
