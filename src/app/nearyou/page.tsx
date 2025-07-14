@@ -8,7 +8,7 @@ import Link from "next/link";
 import Carousel from "@/components/Carousel";
 import PubMap from "@/components/PubsMap";
 
-const defaultCenter = { lat: 53.4084, lng: -2.9916 }; // Liverpool
+const defaultCenter = { lat: 53.4084, lng: -2.9916 };
 
 export default function NearYou() {
   const { allPubs } = useAllPubs();
@@ -36,7 +36,6 @@ export default function NearYou() {
 
   if (!mounted) return <p>Loading...</p>;
 
-  // ✅ Create Map of normalized area -> original area
   const areaMap = new Map<string, string>();
   allPubs.forEach((pub) => {
     if (!pub.area) return;
@@ -51,9 +50,9 @@ export default function NearYou() {
     <div className="min-h-screen bg-bark font-[family-name:var(--font-schoolbell)]">
       <Carousel pubs={allPubs} />
 
-      <div className="grid grid-cols-4 grid-rows-[100px_auto_auto_auto] grid-flow-row">
+      <div className="grid lg:grid-cols-4 lg:grid-rows-[100px_auto_auto_auto] grid-flow-row sm:grid-cols-1 sm:auto-rows-auto sm:gap-y-8">
         {/* Search bar */}
-        <div className="col-start-1 col-end-2 row-start-1 h-28 flex flex-row items-center justify-end content-end">
+        <div className="lg:col-start-1 lg:col-end-2 lg:row-start-1 sm:col-auto sm:row-auto h-28 flex flex-row items-center justify-center content-end">
           <input
             value={address}
             onChange={(e) => setAddress(e.target.value)}
@@ -69,14 +68,14 @@ export default function NearYou() {
         </div>
 
         {/* Map */}
-        <div className="w-full h-90 col-start-1 col-end-3 row-start-2">
+        <div className="w-full h-90 lg:col-start-1 lg:col-end-3 lg:row-start-2 sm:col-auto sm:row-auto">
           <PubMap
             pubs={nearPubs.length > 0 ? nearPubs : allPubs}
             center={center}
           />
         </div>
 
-        <div className="col-start-3 col-end-5 row-start-2 text-cream m-5">
+        <div className="lg:col-start-3 lg:col-end-5 lg:row-start-2 sm:col-auto sm:row-auto text-cream m-5">
           <h1 className="text-2xl">
             Already know the area? Check out different pubs in popular areas
             below ⤵

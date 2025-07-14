@@ -11,7 +11,7 @@ type Pub = {
 
 const containerStyle = {
   width: "90%",
-  height: "60%",
+  height: "100%",
 };
 
 const defaultCenter = {

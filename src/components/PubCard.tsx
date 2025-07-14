@@ -84,35 +84,38 @@ export default function PubCard({
         isSmall ? "w-64 h-32" : "w-64 h-auto"
       }`}
     >
-      <div className="bg-tomato">
-        <div
-          className={`hover:scale-110  bg-teal duration-500 ${
-            isSmall ? "w-full h-24" : "w-48 h-60"
-          }`}
-        >
-          <img
-            src={pic}
-            className={` object-cover ${isSmall ? "w-full h-24" : "w-48 h-60"}`}
-          ></img>
-        </div>
-        <div className="absolute w-56 left-0 p-5 -bottom-16 duration-500 hover:-translate-y-12 hover:bg-cream/70">
-          <div className="absolute -z-10 left-0 w-64 h-16 opacity-0 duration-500 hover:bg-cream/70"></div>
-          <div className="text-xl font-bold text-bark bg-cream/70 p-0">
-            {name}
-            <div></div>
-            <ReadOnlyRating rating={rating} size={isSmall ? "sm" : "lg"} />
+      {" "}
+      <Link href={`/pub/${id}`}>
+        <div className="bg-tomato">
+          <div
+            className={`hover:scale-110  bg-teal duration-500 ${
+              isSmall ? "w-full h-24" : "w-48 h-60"
+            }`}
+          >
+            <img
+              src={pic}
+              className={` object-cover ${
+                isSmall ? "w-full h-24" : "w-48 h-60"
+              }`}
+            ></img>
           </div>
-          <Link href={`/pub/${id}`}>
+          <div className="absolute w-56 left-0 p-5 -bottom-16 duration-500 hover:-translate-y-12 hover:bg-cream/70">
+            <div className="absolute -z-10 left-0 w-64 h-16 opacity-0 duration-500 hover:bg-cream/70"></div>
+            <div className="text-xl font-bold text-bark bg-cream/70 p-0">
+              {name}
+              <div></div>
+              <ReadOnlyRating rating={rating} size={isSmall ? "sm" : "lg"} />
+            </div>
             <span className="hover:opacity-100 w-64 h-24 duration-500 opacity-0 text-bark p-0">
               Day: {day}
               <br />
               Address: {addressLine[0]}
               <br />
               Click for more info!
-            </span>
-          </Link>
+            </span>{" "}
+          </div>{" "}
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

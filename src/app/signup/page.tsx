@@ -18,7 +18,7 @@ export default function SignUp() {
         Let's get you all sorted out!
       </h1>
 
-      <div className="flex flex-flow-row items-center justify-between">
+      <div className="flex flex-col lg:flex-row items-center justify-between">
         <SignupForm onSuccess={() => setShowAfterForm(true)} />
         {showAfterForm && <AfterSignUpForm />}
       </div>

@@ -38,7 +38,7 @@ export default function Today() {
       <h1 className="text-cream text-5xl flex items-center justify-center m-5">
         Check out what's on this evening!{" "}
       </h1>
-      <div className="flex flex-row items-center justify-center gap-4">
+      <div className="flex lg:flex-row flex-col items-center justify-center lg:gap-4">
         {pubsToday.length !== 0 ? (
           pubsToday.map((pub, index) => (
             <div key={index} className="m-5">
