@@ -145,3 +145,22 @@ export async function uploadReview(
 
   return { success: true };
 }
+export async function updatePub(userId: string, pubData: any) {
+  if (!userId) {
+    console.error("No userId provided to updatePub");
+    return { success: false, error: new Error("Missing user ID") };
+  }
+
+  const dataToUpsert = { id: userId, ...pubData };
+
+  const { error } = await supabase.from("pub-users").upsert(dataToUpsert, {
+    onConflict: "id",
+  });
+
+  if (error) {
+    console.error("updatePub error:", error);
+    return { success: false, error };
+  }
+
+  return { success: true };
+}

@@ -6,7 +6,7 @@ import { useAllPubs } from "@/hooks/useAllPubs";
 import SignupForm from "@/components/SignUpForm";
 import AfterSignUpForm from "@/components/AfterSignUpForm";
 
-export default function SignUp() {
+export default function PubSignUp() {
   const { allPubs } = useAllPubs();
   const [showAfterForm, setShowAfterForm] = useState(false);
 
@@ -15,12 +15,12 @@ export default function SignUp() {
       <Carousel pubs={allPubs} />
 
       <h1 className="text-cream text-5xl text-center m-5">
-        Let's get you all sorted out!
+        Let's get your pub all sorted out!
       </h1>
 
       <div className="flex flex-col lg:flex-row items-center justify-between">
         <SignupForm onSuccess={() => setShowAfterForm(true)} />
-        {showAfterForm && <AfterSignUpForm />}
+        {showAfterForm && <AfterSignUpForm pub={true} />}
       </div>
     </div>
   );

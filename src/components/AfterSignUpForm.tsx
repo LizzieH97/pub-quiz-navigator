@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 
-import { updateProfile } from "../lib/api";
+import { updateProfile, updatePub } from "../lib/api";
 import { supabase } from "../lib/supabase";
 import { uploadAvatar } from "../lib/api";
 
 type UpdateProps = {
   title?: "start" | "update";
+  pub?: true | false;
 };
-export default function AfterSignUpForm({ title = "start" }: UpdateProps) {
+export default function AfterSignUpForm({
+  title = "start",
+  pub = false,
+}: UpdateProps) {
   const [userId, setUserId] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -33,11 +37,8 @@ export default function AfterSignUpForm({ title = "start" }: UpdateProps) {
   }, []);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("AfterSignUpForm submitted");
     setError("");
     setSuccess(false);
-
-    let uploadedAvatarUrl = null;
 
     const result = avatar_url
       ? await uploadAvatar(userId, avatar_url)
@@ -47,29 +48,36 @@ export default function AfterSignUpForm({ title = "start" }: UpdateProps) {
       setError("Failed to upload avatar.");
       return;
     }
+
     if (!userId) {
       setError("No user ID found.");
       return;
     }
+
+    // Always update profile
     const profileUpdate = await updateProfile(userId, {
       username,
       full_name,
       bio,
       avatar_url: result.url,
     });
-    console.log("Calling updateProfile with:", userId, {
-      username,
-      full_name,
-      bio,
-      avatar_url: result.url,
-    });
-    console.log("Profile update response:", profileUpdate);
-    console.log("Profile update success?:", profileUpdate?.success);
 
     if (!profileUpdate.success) {
       setError(profileUpdate.error?.message || "Failed to update profile.");
-      setSuccess(false);
       return;
+    }
+
+    if (pub) {
+      const pubUpdate = await updatePub(userId, {
+        bio,
+        avatar_url: result.url,
+        name: full_name,
+      });
+
+      if (!pubUpdate.success) {
+        setError(pubUpdate.error?.message || "Failed to update pub info.");
+        return;
+      }
     }
 
     setSuccess(true);
@@ -92,11 +100,15 @@ export default function AfterSignUpForm({ title = "start" }: UpdateProps) {
                 ? "Just need a few more details:"
                 : "Let's update your profile!"}
             </legend>
-            <input
-              className="w-full bg-beige p-3 text-base md:text-lg rounded-3xl border-teal border-4 text-teal placeholder-bark "
-              placeholder="Username"
-              onChange={(e) => setUserName(e.target.value)}
-            />
+            {pub ? (
+              <></>
+            ) : (
+              <input
+                className="w-full bg-beige p-3 text-base md:text-lg rounded-3xl border-teal border-4 text-teal placeholder-bark "
+                placeholder="Username"
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            )}
             <input
               className="w-full bg-beige p-3 text-base md:text-lg rounded-3xl border-teal border-4 text-teal placeholder-bark "
               placeholder="Name"

@@ -7,10 +7,10 @@ export default function NavBar() {
   const { profile, signOut } = useUserProfile();
   const [isOpen, setIsOpen] = useState(false);
   const buttonStyling =
-    "bg-bark h-16 w-24 text-lg text-cream rounded-xl border-4 border-teal flex items-center justify-center p-0";
+    "bg-bark h-16 w-28 text-lg text-cream rounded-xl border-4 border-teal flex items-center justify-center p-0 pl-1";
 
   return (
-    <ul className="menu lg:menu-horizontal bg-beige w-full h-20 flex items-center content-center justify-center mt-3 sm:mt-1  rounded-3xl border-4 border-teal">
+    <ul className="menu lg:menu-horizontal bg-beige w-full h-20 flex items-center content-center justify-around mt-3 sm:mt-1  rounded-3xl border-4 border-teal">
       <li>
         <Link href="/" className="sm:p-0">
           <img src="/logo.png" className="h-16 w-28 object-cover "></img>
@@ -69,12 +69,21 @@ export default function NavBar() {
                   Sign in
                 </Link>
               </li>
+              <li>
+                <Link href="/pubsignup" onClick={() => setIsOpen(false)}>
+                  Are you a pub? Sign up here!
+                </Link>
+              </li>
+              <li>
+                <Link href="/pubsignin" onClick={() => setIsOpen(false)}>
+                  Sign your pub in here!
+                </Link>
+              </li>
             </>
           )}
         </ul>
       </div>
 
-      {/* ✅ Desktop nav */}
       <li className="hidden lg:block">
         <Link href="/today" className={buttonStyling}>
           Quizzes on Today
@@ -108,6 +117,24 @@ export default function NavBar() {
           <li className="hidden lg:block">
             <Link href="/signin" className={buttonStyling}>
               Sign in
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/pubsignup"
+              onClick={() => setIsOpen(false)}
+              className={buttonStyling}
+            >
+              Sign your pub up here
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/pubsignin"
+              onClick={() => setIsOpen(false)}
+              className={buttonStyling}
+            >
+              Sign your pub in here
             </Link>
           </li>
         </>
