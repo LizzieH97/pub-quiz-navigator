@@ -1,22 +1,33 @@
-// hooks/useAllPubs.ts
 import { useEffect, useState } from "react";
-import { fetchPubById } from "@/lib/api";
+import { supabase } from "@/lib/supabase";
 
-export function useOnePub(id: number) {
-  const [onePub, setOnePub] = useState<any>();
-  const [err, setErr] = useState<string | null>(null);
+export function useOnePub(pubId: number) {
+  const [onePub, setOnePub] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadPubs = async () => {
-      try {
-        const data = await fetchPubById(id);
-        setOnePub(data || []);
-      } catch (err: any) {
-        setErr(err.message);
-      }
-    };
-    loadPubs();
-  }, [id]);
+    const fetchPub = async () => {
+      const { data, error } = await supabase
+        .from("pub-list")
+        .select(
+          `
+          *,
+          pub-users:pub-users (bio, name, avatar_url)
+        `
+        )
+        .eq("id", pubId)
+        .single();
 
-  return { onePub, err };
+      if (error) {
+        console.error("One pub error:", error);
+      }
+
+      setOnePub(data ?? null);
+      setLoading(false);
+    };
+
+    fetchPub();
+  }, [pubId]);
+
+  return { onePub, loading };
 }

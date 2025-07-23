@@ -86,34 +86,49 @@ export default function PubCard({
     >
       {" "}
       <Link href={`/pub/${id}`}>
-        <div className="bg-tomato">
+        <div className="relative group">
+          {" "}
+          {/* <- ✅ add group */}
           <div
-            className={`hover:scale-110  bg-teal duration-500 ${
-              isSmall ? "w-full h-24" : "w-48 h-60"
-            }`}
+            className={`hover:scale-110 duration-500 ${
+              isSmall ? "w-full h-28" : "w-48 h-60"
+            } `}
           >
             <img
               src={pic}
-              className={` object-cover ${
-                isSmall ? "w-full h-24" : "w-48 h-60"
-              }`}
-            ></img>
+              className={`object-cover ${
+                isSmall ? "w-full h-28 " : "w-48 h-60"
+              } rounded-3xl`}
+            />
           </div>
-          <div className="absolute w-56 left-0 p-5 -bottom-16 duration-500 hover:-translate-y-12 hover:bg-cream/70">
-            <div className="absolute -z-10 left-0 w-64 h-16 opacity-0 duration-500 hover:bg-cream/70"></div>
-            <div className="text-xl font-bold text-bark bg-cream/70 p-0">
-              {name}
-              <div></div>
+          <div
+            className={`absolute left-0 w-full p-0 pr-6 pt-6 duration-500 
+        ${
+          isSmall
+            ? "inset-0 flex flex-col items-start justify-start bg-black/40 text-cream"
+            : "-bottom-8 group-hover:-translate-y-12 group-hover:bg-cream/70"
+        } rounded-3xl`}
+          >
+            <div className="text-xl font-bold text-bark bg-cream/70 p-1 leading-tight flex flex-col">
+              <span>{name}</span>
               <ReadOnlyRating rating={rating} size={isSmall ? "sm" : "lg"} />
+              <div className={`${isSmall ? "text-base" : "hidden"}`}>
+                Click for more info!
+              </div>
             </div>
-            <span className="hover:opacity-100 w-64 h-24 duration-500 opacity-0 text-bark p-0">
+
+            <span
+              className={`w-64 h-24 duration-500 opacity-0 text-bark p-0 ${
+                isSmall ? "hidden" : "group-hover:opacity-100"
+              }`}
+            >
               Day: {day}
               <br />
               Address: {addressLine[0]}
               <br />
               Click for more info!
-            </span>{" "}
-          </div>{" "}
+            </span>
+          </div>
         </div>
       </Link>
     </div>

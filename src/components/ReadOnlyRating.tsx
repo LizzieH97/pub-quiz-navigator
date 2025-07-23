@@ -25,13 +25,13 @@ export default function ReadOnlyRating({
     );
   });
 
-  return <div className="rating">{stars}</div>;
+  return <div className="rating m-0 p-0">{stars}</div>;
 }
 
 function getSizeClass(size: "sm" | "md" | "lg") {
   switch (size) {
     case "sm":
-      return "w-4 h-4 p-0 m-0";
+      return "w-3 h-3 p-0 m-0";
     case "lg":
       return "w-6 h-6 p-0 m-0";
     default:

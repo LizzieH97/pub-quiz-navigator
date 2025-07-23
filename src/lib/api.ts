@@ -1,4 +1,4 @@
-// lib/api.ts
+import { StringDecoder } from "node:string_decoder";
 import { supabase } from "./supabase";
 
 export async function fetchPubs() {
@@ -45,10 +45,8 @@ export async function updateProfile(userId: string, profileData: any) {
     return { success: false, error: new Error("Missing user ID") };
   }
 
-  // Ensure the userId is included in the data to upsert (as primary key)
   const dataToUpsert = { id: userId, ...profileData };
 
-  // TypeScript-safe workaround to allow returning: 'minimal'
   const { error } = await supabase.from("quiz-enjoyer").upsert(dataToUpsert, {
     onConflict: "id",
     // @ts-ignore: 'returning' is valid but not typed correctly
@@ -163,4 +161,26 @@ export async function updatePub(userId: string, pubData: any) {
   }
 
   return { success: true };
+}
+export async function updatePost(name: string, post: string, id: string) {
+  if (!id) {
+    console.error("No userId provided to uploadReview");
+    return { success: false, error: new Error("Please sign in first!") };
+  }
+
+  const { error } = await supabase.from("pub-enjoyers").upsert(
+    [
+      {
+        name,
+        post,
+
+        pub_id: id,
+      },
+    ],
+    {
+      onConflict: "id", // or another unique key if you don't want to overwrite by default
+      // @ts-ignore: 'returning' is valid but not typed correctly
+      returning: "minimal",
+    }
+  );
 }

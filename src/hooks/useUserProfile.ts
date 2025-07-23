@@ -15,7 +15,6 @@ export function useUserProfile() {
   const [error, setError] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Fetch user profile and auth state
   useEffect(() => {
     const fetchProfile = async () => {
       setLoading(true);
