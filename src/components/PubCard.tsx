@@ -81,14 +81,14 @@ export default function PubCard({
   return (
     <div
       className={`relative group cursor-pointer overflow-hidden duration-500  bg-beige text-black px-3 py-1 mr-3 border-4 border-teal rounded-3xl ${
-        isSmall ? "w-60 h-32" : "w-64 h-auto"
+        isSmall ? "w-60 h-32" : "w-64 h-80"
       }`}
     >
       {" "}
       <Link href={`/pub/${id}`}>
         <div
           className={`relative group cursor-pointer overflow-hidden duration-500 bg-beige text-black mr-4  rounded-3xl ${
-            isSmall ? "w-60 h-32" : "w-64 h-auto"
+            isSmall ? "w-60 h-32" : "w-64 h-80"
           }`}
         >
           <div
