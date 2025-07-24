@@ -12,14 +12,14 @@ export default function Home() {
   const { profile } = useUserProfile();
   const center = { lat: 53.4084, lng: -2.9916 };
   return (
-    <div className=" min-h-screen pb-2 sm:p-1 font-[family-name:var(--font-schoolbell)] bg-bark">
+    <div className=" min-h-screen pb-2 sm:p-1 sm:m-1 font-[family-name:var(--font-schoolbell)] bg-bark">
       <Carousel pubs={allPubs} />
       <main className="flex flex-col w-full items-center sm:items-start">
         <section className="lg:grid grid-cols-6 grid-rows-5 grid-flow-row sm:flex sm:flex-col">
-          <div className="col-start-1 col-end-3 row-start-1 row-end-3 w-full h-full pt-6">
+          <div className="lg:col-start-1 lg:col-end-3 lg:row-start-1 lg:row-end-3 w-11/12 lg:w-full h-full pt-6 sm:overflow-visible">
             <Title />
           </div>
-          <div className="text-2xl px-7 col-start-3 col-end-7 lg:row-start-1 lg:row-end-3 text-white mt-8 m-4 p-2 bg-black/30 border-8 border-teal sm:flex flex-col">
+          <div className="text-2xl lg:px-7 lg:col-start-3 lg:col-end-7 lg:row-start-1 lg:row-end-3 text-white mt-8 lg:m-4 m-1 p-2 bg-black/30 border-8 border-teal sm:flex flex-col w-11/12  lg:w-full sm:overflow-visible">
             {profile ? (
               <span className="text-4xl sm:text-2xl">
                 Hi {profile?.full_name}!!{" "}
@@ -28,7 +28,7 @@ export default function Home() {
               <span className="text-4xl sm:text-2xl">Hi!! </span>
             )}
 
-            <p className="text-xl sm:text-base">
+            <p className="lg:text-xl text-base">
               I'm Lizzie and I am a massive quiz lover. I have always had an
               issue with pub quizzes - why is there so little information about
               days and locations on the internet? So I decided to fix that
@@ -37,7 +37,7 @@ export default function Home() {
               night that suits you 🥳
             </p>
 
-            <p className="text-xl mt-4 sm:text-xs">
+            <p className="lg:text-xl mt-4 text-xs">
               Disclaimer: In the past I've turned up to pub quizzes advertised
               online (e.g. on Facebook) and the quiz has just not happened - I'm
               going to try my best and get reliable information directly from
@@ -45,19 +45,14 @@ export default function Home() {
             </p>
           </div>
 
-          <div className=" text-center col-start-1 col-end-7 row-start-3 row-end-6">
-            <h2 className="text-cream text-3xl">
+          <div className=" text-center lg:col-start-1 lg:col-end-7 row-start-3 row-end-6 w-3/4 lg:w-full mx-8 lg:m-0">
+            <h2 className="text-cream lg:text-3xl text-2xl ">
               Want to find one near you? Check out the map below!
             </h2>
             <PubMap pubs={allPubs} center={center} />
           </div>
         </section>
       </main>
-      <footer className="row-start-3 flex flex-wrap items-center justify-center text-cream">
-        <p>
-          Made by Lizzie 💕 I received no money from this, plz give me a job!!
-        </p>
-      </footer>
     </div>
   );
 }

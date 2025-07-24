@@ -80,32 +80,34 @@ export default function PubCard({
   }
   return (
     <div
-      className={`relative group cursor-pointer overflow-hidden duration-500  bg-beige text-black px-5 py-1 border-4 border-teal rounded-3xl ${
-        isSmall ? "w-64 h-32" : "w-64 h-auto"
+      className={`relative group cursor-pointer overflow-hidden duration-500  bg-beige text-black px-3 py-1 mr-3 border-4 border-teal rounded-3xl ${
+        isSmall ? "w-60 h-32" : "w-64 h-auto"
       }`}
     >
       {" "}
       <Link href={`/pub/${id}`}>
-        <div className="relative group">
-          {" "}
-          {/* <- ✅ add group */}
+        <div
+          className={`relative group cursor-pointer overflow-hidden duration-500 bg-beige text-black mr-4  rounded-3xl ${
+            isSmall ? "w-60 h-32" : "w-64 h-auto"
+          }`}
+        >
           <div
-            className={`hover:scale-110 duration-500 ${
-              isSmall ? "w-full h-28" : "w-48 h-60"
+            className={`absolute hover:scale-110 duration-500 ${
+              isSmall ? "w-full h-full mr-5" : "w-48 h-60"
             } `}
           >
             <img
               src={pic}
-              className={`object-cover ${
-                isSmall ? "w-full h-28 " : "w-48 h-60"
+              className={`object-cover absolute hover:scale-110 duration-500 ${
+                isSmall ? "w-full h-full mr-5" : "w-48 h-60"
               } rounded-3xl`}
             />
           </div>
           <div
-            className={`absolute left-0 w-full p-0 pr-6 pt-6 duration-500 
+            className={`absolute  w-full p-0 duration-500 
         ${
           isSmall
-            ? "inset-0 flex flex-col items-start justify-start bg-black/40 text-cream"
+            ? "inset-0 top-5 flex flex-col items-start justify-start bg-black/40 text-cream"
             : "-bottom-8 group-hover:-translate-y-12 group-hover:bg-cream/70"
         } rounded-3xl`}
           >

@@ -2,6 +2,7 @@ import { Chewy, Courier_Prime, Schoolbell } from "next/font/google";
 import "./globals.css";
 
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 
 const schoolbell = Schoolbell({
   weight: "400",
@@ -38,6 +39,7 @@ export default function RootLayout({
         </div>
 
         {children}
+        <Footer />
       </body>
     </html>
   );
