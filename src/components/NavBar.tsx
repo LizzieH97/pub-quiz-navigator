@@ -15,7 +15,8 @@ export default function NavBar() {
     "bg-bark h-14 w-28 text-lg text-cream rounded-xl border-4 border-teal flex items-center justify-center p-0 pl-1 text-center ";
   const contrastButtonStyling =
     "bg-beige h-14 w-28 text-lg text-bark rounded-xl border-4 border-teal flex items-center justify-center p-0 pl-1 text-center ";
-
+  const contactBtnStyling =
+    "bg-teal h-14 w-28 text-lg text-cream rounded-xl border-4 border-cream flex items-center justify-center p-0 pl-1 text-center ";
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       setIsQuizOpen(false);
@@ -90,6 +91,13 @@ export default function NavBar() {
               >
                 Sort Pubs by Day
               </Link>
+              <Link
+                href="/allpubs"
+                onClick={() => setIsDrawerOpen(false)}
+                className={contrastButtonStyling}
+              >
+                All Pubs
+              </Link>
               <p className="text-base text-cream text-center">Account info</p>
               {profile ? (
                 <>
@@ -150,6 +158,13 @@ export default function NavBar() {
             </div>
           </div>
         )}
+        <Link
+          href="/contact"
+          onClick={() => setIsDrawerOpen(false)}
+          className={contactBtnStyling}
+        >
+          Get in touch!
+        </Link>
       </div>
 
       {/* DESKTOP */}
@@ -181,6 +196,11 @@ export default function NavBar() {
           <li className="hidden lg:block">
             <Link href="/sortbyday" className={buttonStyling}>
               Sort Pubs by Day
+            </Link>
+          </li>
+          <li className="hidden lg:block">
+            <Link href="/allpubs" className={buttonStyling}>
+              All Pubs
             </Link>
           </li>
         </ul>
@@ -278,6 +298,9 @@ export default function NavBar() {
           </div>
         </>
       )}
+      <Link href="/contact" className={contactBtnStyling}>
+        Get in touch!
+      </Link>
     </ul>
   );
 }

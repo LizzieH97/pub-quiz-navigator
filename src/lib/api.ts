@@ -168,7 +168,7 @@ export async function updatePost(name: string, post: string, id: string) {
     return { success: false, error: new Error("Please sign in first!") };
   }
 
-  const { error } = await supabase.from("pub-enjoyers").upsert(
+  const { error } = await supabase.from("pub-users").upsert(
     [
       {
         name,
@@ -183,4 +183,20 @@ export async function updatePost(name: string, post: string, id: string) {
       returning: "minimal",
     }
   );
+}
+export async function postContact(
+  name: string,
+  message: string,
+  email: string
+) {
+  const { error, data } = await supabase
+    .from("contact")
+    .insert([{ name, message, email }]);
+
+  if (error) {
+    console.error("Error inserting contact message:", error.message);
+    throw error;
+  }
+
+  return data;
 }
