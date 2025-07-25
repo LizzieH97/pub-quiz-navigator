@@ -12,7 +12,9 @@ export default async function AreaPage({
   const decodedArea = decodeURIComponent(params.slug);
 
   const { allPubs, loading, error } = useAllPubs();
-  const areaPubs = allPubs.filter((pub) => pub.area === decodedArea);
+  const areaPubs = allPubs.filter(
+    (pub) => pub.area.toLowerCase() === decodedArea
+  );
 
   return (
     <div className="min-h-screen bg-bark font-[family-name:var(--font-schoolbell)]">

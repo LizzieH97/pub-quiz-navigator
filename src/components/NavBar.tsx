@@ -1,39 +1,54 @@
 "use client";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function NavBar() {
   const { profile, signOut } = useUserProfile();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // mobile
   const [isPubOpen, setIsPubOpen] = useState(false);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const buttonStyling =
-    "bg-bark h-16 w-28 text-lg text-cream rounded-xl border-4 border-teal flex items-center justify-center p-0 pl-1 text-center";
-  const contrastButtonStyling =
-    "bg-beige h-16 w-28 text-lg text-bark rounded-xl border-4 border-teal flex items-center justify-center p-0 pl-1 text-center";
-  return (
-    <ul className="menu lg:menu-horizontal bg-beige w-full h-20 flex items-center content-around justify-around mt-2 sm:mt-2 p-0 rounded-3xl border-4 border-teal">
-      {/*MOBILE*/}
 
-      {/* Mobile Hamburger */}
+  const buttonStyling =
+    "bg-bark h-14 w-28 text-lg text-cream rounded-xl border-4 border-teal flex items-center justify-center p-0 pl-1 text-center ";
+  const contrastButtonStyling =
+    "bg-beige h-14 w-28 text-lg text-bark rounded-xl border-4 border-teal flex items-center justify-center p-0 pl-1 text-center ";
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      setIsQuizOpen(false);
+      setIsPubOpen(false);
+      setIsAccountOpen(false);
+    };
+
+    document.addEventListener("click", handleClickOutside, true);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
+
+  return (
+    <ul className="menu lg:menu-horizontal bg-beige w-full lg:w-full h-16 flex items-start lg:content-start content-around justify-around my-0 sm:mt-2 p-0 rounded-3xl border-4 border-teal ">
+      {/* MOBILE */}
       <button
         onClick={() => setIsDrawerOpen(true)}
-        className="lg:hidden btn bg-bark text-cream border-4 border-teal "
+        className="lg:hidden btn bg-bark text-cream border-4 border-teal w-16 h-4"
       >
         Menu
       </button>
       <li>
-        <Link href="/" className="p-0 m-0">
+        <Link href="/" className="p-0  ">
           <img
             src="/logo.png"
             alt="logo"
-            className="h-16 w-32 object-cover mt-1 border-4 border-teal rounded-2xl"
+            className="h-16 w-36 object-cover mr-10 lg:m-0"
           />
         </Link>
       </li>
+
       <div
         className={`dropdown sm:block lg:hidden ${
           isOpen ? "dropdown-open" : ""
@@ -41,17 +56,15 @@ export default function NavBar() {
       >
         {isDrawerOpen && (
           <div className="fixed inset-0 z-50 flex w-32 -ml-4">
-            {/* Backdrop */}
             <div
               className="flex-1 bg-black/50"
               onClick={() => setIsDrawerOpen(false)}
             ></div>
 
-            {/* Drawer */}
             <div className="w-64 bg-bark p-4 border-8 border-beige rounded-2xl flex flex-col space-y-2">
               <button
                 onClick={() => setIsDrawerOpen(false)}
-                className="btn bg-beige text-bark border-4 border-teal roudned-3xl mb-4 w-16 h-8"
+                className="btn bg-beige text-bark border-4 border-teal  mb-4 w-16 h-8"
               >
                 Close
               </button>
@@ -139,14 +152,17 @@ export default function NavBar() {
         )}
       </div>
 
-      {/*DESKTOP*/}
+      {/* DESKTOP */}
       <div
         className={`dropdown hidden lg:block ${
           isQuizOpen ? "dropdown-open" : ""
         }`}
       >
         <label
-          onClick={() => setIsQuizOpen(!isQuizOpen)}
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsQuizOpen(!isQuizOpen);
+          }}
           className={`btn ${buttonStyling} hidden lg:block pt-3 font-normal`}
         >
           Quiz Info
@@ -177,7 +193,10 @@ export default function NavBar() {
           }`}
         >
           <label
-            onClick={() => setIsAccountOpen(!isAccountOpen)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsAccountOpen(!isAccountOpen);
+            }}
             className={`btn ${buttonStyling} hidden lg:block pt-3 font-normal`}
           >
             Account Info
@@ -203,7 +222,10 @@ export default function NavBar() {
             }`}
           >
             <label
-              onClick={() => setIsAccountOpen(!isAccountOpen)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsAccountOpen(!isAccountOpen);
+              }}
               className={`btn ${buttonStyling} hidden lg:block pt-3 font-normal`}
             >
               Account Info
@@ -227,8 +249,11 @@ export default function NavBar() {
             }`}
           >
             <label
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsPubOpen(!isPubOpen);
+              }}
               className={`btn ${buttonStyling} hidden lg:block font-normal`}
-              onClick={() => setIsPubOpen(!isPubOpen)}
             >
               Are you a pub?
             </label>

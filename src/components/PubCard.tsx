@@ -2,6 +2,7 @@ import { supabase } from "@/lib/supabase";
 import ReadOnlyRating from "./ReadOnlyRating";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import LikeShow from "./LikeShow";
 
 type PubProps = {
   name: string;
@@ -80,26 +81,26 @@ export default function PubCard({
   }
   return (
     <div
-      className={`relative group cursor-pointer overflow-hidden duration-500  bg-beige text-black px-3 py-1 mr-3 border-4 border-teal rounded-3xl ${
+      className={`relative group cursor-pointer overflow-hidden duration-500  bg-teal text-black px-3 py-1 mr-3 border-4 border-beige rounded-3xl ${
         isSmall ? "w-60 h-32" : "w-64 h-80"
       }`}
     >
       {" "}
       <Link href={`/pub/${id}`}>
         <div
-          className={`relative group cursor-pointer overflow-hidden duration-500 bg-beige text-black mr-4  rounded-3xl ${
-            isSmall ? "w-60 h-32" : "w-64 h-80"
+          className={`relative group cursor-pointer overflow-hidden duration-500 bg-teal text-black   rounded-3xl ${
+            isSmall ? "w-60 h-32 mr-4" : "w-64 h-80"
           }`}
         >
           <div
             className={`absolute hover:scale-110 duration-500 ${
-              isSmall ? "w-full h-full mr-5" : "w-48 h-60"
+              isSmall ? "w-full h-full mr-5" : "w-72 h-60"
             } `}
           >
             <img
               src={pic}
               className={`object-cover absolute hover:scale-110 duration-500 ${
-                isSmall ? "w-full h-full mr-5" : "w-48 h-60"
+                isSmall ? "w-full h-full mr-5" : "w-60 h-80"
               } rounded-3xl`}
             />
           </div>
@@ -107,29 +108,37 @@ export default function PubCard({
             className={`absolute  w-full p-0 duration-500 
         ${
           isSmall
-            ? "inset-0 top-5 flex flex-col items-start justify-start bg-black/40 text-cream"
+            ? "inset-0  flex flex-col items-start justify-start bg-black/40 "
             : "-bottom-8 group-hover:-translate-y-12 group-hover:bg-cream/70"
         } rounded-3xl`}
           >
-            <div className="text-xl font-bold text-bark bg-cream/70 p-1 leading-tight flex flex-col">
+            <div className="absolute top-0 right-5 p-0 m-0">
+              <LikeShow id={id} />
+            </div>
+            <div className="text-xl mt-5 font-bold text-bark bg-cream/70 p-1 leading-tight flex flex-col ">
               <span>{name}</span>
               <ReadOnlyRating rating={rating} size={isSmall ? "sm" : "lg"} />
-              <div className={`${isSmall ? "text-base" : "hidden"}`}>
+              <div
+                className={`${
+                  isSmall ? "text-base" : "hidden"
+                } flex flex-row items-center justify-start`}
+              >
                 Click for more info!
               </div>
             </div>
-
-            <span
-              className={`w-64 h-24 duration-500 opacity-0 text-bark p-0 ${
-                isSmall ? "hidden" : "group-hover:opacity-100"
-              }`}
-            >
-              Day: {day}
-              <br />
-              Address: {addressLine[0]}
-              <br />
-              Click for more info!
-            </span>
+            <div className="p-2 ">
+              <span
+                className={`w-64 h-24 duration-500 opacity-0 text-bark  ${
+                  isSmall ? "hidden" : "group-hover:opacity-100 "
+                }`}
+              >
+                Day: {day}
+                <br />
+                Address: {addressLine[0]}
+                <br />
+                Click for more info!
+              </span>
+            </div>
           </div>
         </div>
       </Link>

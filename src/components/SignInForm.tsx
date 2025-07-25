@@ -19,13 +19,12 @@ export default function SignInForm() {
       return;
     }
 
-    try {
-      await signIn(email, password);
+    const { error: signInError } = await signIn(email, password);
 
-      window.location.href = "/";
-    } catch (err) {
-      console.error(err);
-      alert("Sign in failed!");
+    if (signInError) {
+      alert("Sign in failed: " + signInError);
+    } else {
+      router.push("/");
     }
   };
 

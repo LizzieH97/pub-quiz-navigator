@@ -1,6 +1,7 @@
 "use client";
 import Carousel from "@/components/Carousel";
 import CreateReviewForm from "@/components/CreateReview";
+import FavToggle from "@/components/FavToggle";
 import OnePubMap from "@/components/OnePubMap";
 import CreatePubPostForm from "@/components/PubPost";
 import ReadOnlyRating from "@/components/ReadOnlyRating";
@@ -9,6 +10,7 @@ import { useAllPubs } from "@/hooks/useAllPubs";
 import { useAuth } from "@/hooks/useAuth";
 import { useOnePub } from "@/hooks/useOnePub";
 import { usePubProfile } from "@/hooks/usePubUser";
+import { useUserProfile } from "@/hooks/useUserProfile";
 import { useParams } from "next/navigation";
 
 export default function OnePub() {
@@ -18,6 +20,7 @@ export default function OnePub() {
   const { allPubs } = useAllPubs();
   const { onePub, loading } = useOnePub(pubId);
   const { user } = useAuth();
+  const { profile } = useUserProfile();
   const { pubProfile, loading: pubProfileLoading } = usePubProfile(user?.id);
 
   if (loading || !onePub) return <p>Loading pub...</p>;
@@ -25,7 +28,6 @@ export default function OnePub() {
   const ownerId = onePub.id; // pub's id
   const isOwner = pubProfile?.pub_id === ownerId;
 
-  // Use pub_user.bio as description fallback
   const description = onePub.pub_user?.bio || onePub.description || "No info";
   console.log("user.id:", user?.id);
   console.log("user.pub_id:", user?.pub_id);
@@ -54,6 +56,7 @@ export default function OnePub() {
       onePub.day = "Sunday";
       break;
   }
+  console.log(profile);
   return (
     <div className="min-h-screen pb-2 sm:p-1 font-[family-name:var(--font-schoolbell)] bg-bark overflow-x-hidden">
       <Carousel pubs={allPubs} />
@@ -85,8 +88,15 @@ export default function OnePub() {
               alt={onePub.name}
               className="absolute inset-0 w-full h-full object-cover opacity-90 z-0 border-8 border-teal lg:w-full"
             />
-
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-beige bg-opacity-70 p-4 flex flex-col items-center justify-center w-72">
+            {profile ? (
+              <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 bg-beige bg-opacity-70 p-4 flex flex-row items-center content-around justify-around w-48 h-12">
+                <FavToggle pubId={pubId} />
+                <div className="w-16">Favourite this pub!</div>
+              </div>
+            ) : (
+              <></>
+            )}
+            <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 bg-beige bg-opacity-70 p-4 flex flex-col items-center justify-center w-72">
               <h1 className="text-4xl text-black">{onePub.name}</h1>
               <ReadOnlyRating rating={onePub.rating} size="lg" />
             </div>
@@ -116,9 +126,6 @@ export default function OnePub() {
               <li className="list-disc ">
                 Time:{" "}
                 <span className="text-2xl ">{onePub.time.slice(0, 5)}</span>{" "}
-                <span className="text-base ">
-                  (I can't guarantee this soz been burnt many times)
-                </span>
               </li>
               {onePub.cost ? (
                 <li className="list-disc">

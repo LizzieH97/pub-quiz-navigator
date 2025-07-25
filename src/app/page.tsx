@@ -15,7 +15,7 @@ export default function Home() {
     <div className=" min-h-screen pb-2 sm:p-1 sm:m-1 font-[family-name:var(--font-schoolbell)] bg-bark">
       <Carousel pubs={allPubs} />
       <main className="flex flex-col w-full items-center sm:items-start">
-        <section className="lg:grid grid-cols-6 grid-rows-5 grid-flow-row sm:flex sm:flex-col">
+        <section className="lg:grid grid-cols-6 lg:grid-rows-5 lg:grid-flow-row flex flex-col justify-center items-center">
           <div className="lg:col-start-1 lg:col-end-3 lg:row-start-1 lg:row-end-3 w-11/12 lg:w-full h-full pt-6 sm:overflow-visible">
             <Title />
           </div>
