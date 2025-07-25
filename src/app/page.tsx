@@ -28,7 +28,7 @@ export default function Home() {
               <span className="text-4xl sm:text-2xl">Hi!! </span>
             )}
 
-            <p className="lg:text-xl text-base">
+            <p className="lg:text-2xl text-base">
               I'm Lizzie and I am a massive quiz lover. I have always had an
               issue with pub quizzes - why is there so little information about
               days and locations on the internet? So I decided to fix that
@@ -42,6 +42,13 @@ export default function Home() {
               online (e.g. on Facebook) and the quiz has just not happened - I'm
               going to try my best and get reliable information directly from
               the pubs themselves but I can't make guarantees!
+            </p>
+            <p className="lg:text-2xl text-base mt-4">
+              Know of any more quizzes? Are you actually a pub who wants to add
+              your quiz?{" "}
+              <a href="/contact" className="font-bold text-olive">
+                Let me know!
+              </a>
             </p>
           </div>
 

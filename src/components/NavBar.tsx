@@ -49,7 +49,6 @@ export default function NavBar() {
           />
         </Link>
       </li>
-
       <div
         className={`dropdown sm:block lg:hidden ${
           isOpen ? "dropdown-open" : ""
@@ -134,39 +133,34 @@ export default function NavBar() {
                   >
                     Sign in
                   </Link>
-                  <div>
-                    <p className="text-base text-cream text-center">
-                      Are you a pub?
-                    </p>
-                    <Link
-                      href="/pubsignup"
-                      onClick={() => setIsDrawerOpen(false)}
-                      className={contrastButtonStyling}
-                    >
-                      Pub Sign up
-                    </Link>
-                    <Link
-                      href="/pubsignin"
-                      onClick={() => setIsDrawerOpen(false)}
-                      className={contrastButtonStyling}
-                    >
-                      Pub Sign in
-                    </Link>
-                  </div>
                 </>
               )}
+              <p className="text-base text-cream text-center">Are you a pub?</p>
+              <Link
+                href="/pubsignup"
+                onClick={() => setIsDrawerOpen(false)}
+                className={contrastButtonStyling}
+              >
+                Pub Sign up
+              </Link>
+              <Link
+                href="/pubsignin"
+                onClick={() => setIsDrawerOpen(false)}
+                className={contrastButtonStyling}
+              >
+                Pub Sign in
+              </Link>{" "}
+              <Link
+                href="/contact"
+                onClick={() => setIsDrawerOpen(false)}
+                className={contactBtnStyling}
+              >
+                Get in touch!
+              </Link>
             </div>
           </div>
         )}
-        <Link
-          href="/contact"
-          onClick={() => setIsDrawerOpen(false)}
-          className={contactBtnStyling}
-        >
-          Get in touch!
-        </Link>
       </div>
-
       {/* DESKTOP */}
       <div
         className={`dropdown hidden lg:block ${
@@ -205,7 +199,6 @@ export default function NavBar() {
           </li>
         </ul>
       </div>
-
       {profile ? (
         <div
           className={`dropdown hidden lg:block ${
@@ -263,44 +256,38 @@ export default function NavBar() {
               </li>
             </ul>
           </div>
-          <div
-            className={`dropdown hidden lg:block ${
-              isPubOpen ? "dropdown-open" : ""
-            }`}
-          >
-            <label
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsPubOpen(!isPubOpen);
-              }}
-              className={`btn ${buttonStyling} hidden lg:block font-normal`}
-            >
-              Are you a pub?
-            </label>
-            <ul className="dropdown-content menu p-2 z-50 shadow bg-beige border-4 border-teal rounded-box w-44">
-              <li>
-                <Link
-                  href="/pubsignup"
-                  className={`${buttonStyling} m-1 w-3/4`}
-                >
-                  Sign your pub up!
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/pubsignin"
-                  className={`${buttonStyling} m-1 w-3/4`}
-                >
-                  Sign your pub in!
-                </Link>
-              </li>
-            </ul>
-          </div>
         </>
       )}
-      <Link href="/contact" className={contactBtnStyling}>
+      <div
+        className={`dropdown hidden lg:block ${
+          isPubOpen ? "dropdown-open" : ""
+        }`}
+      >
+        <label
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsPubOpen(!isPubOpen);
+          }}
+          className={`btn ${buttonStyling} hidden lg:block font-normal`}
+        >
+          Are you a pub?
+        </label>
+        <ul className="dropdown-content menu p-2 z-50 shadow bg-beige border-4 border-teal rounded-box w-44">
+          <li>
+            <Link href="/pubsignup" className={`${buttonStyling} m-1 w-3/4`}>
+              Sign your pub up!
+            </Link>
+          </li>
+          <li>
+            <Link href="/pubsignin" className={`${buttonStyling} m-1 w-3/4`}>
+              Sign your pub in!
+            </Link>
+          </li>
+        </ul>{" "}
+      </div>
+      <Link href="/contact" className={`hidden lg:flex ${contactBtnStyling}`}>
         Get in touch!
-      </Link>
+      </Link>{" "}
     </ul>
   );
 }
