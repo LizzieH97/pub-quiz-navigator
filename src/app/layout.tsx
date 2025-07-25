@@ -29,7 +29,7 @@ export default function RootLayout({
       <body
         className={`
           ${schoolbell.variable}
-          antialiased
+          antialiased bg-bark
         `}
       >
         <div
