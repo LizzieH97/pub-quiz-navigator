@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { geocodeAddress } from "../../lib/geocode";
+import { useGeocode } from "../../lib/geocode"; // your hook
 import { getNearbyPubs } from "../../lib/places";
 import { useAllPubs } from "@/hooks/useAllPubs";
 import Link from "next/link";
@@ -14,7 +14,11 @@ export default function NearYou() {
   const { allPubs } = useAllPubs();
 
   const [mounted, setMounted] = useState(false);
-  const [address, setAddress] = useState("");
+  const [searchAddress, setSearchAddress] = useState(""); // controlled input
+  const [submittedAddress, setSubmittedAddress] = useState(""); // address passed to hook
+
+  const { location, error } = useGeocode(submittedAddress);
+
   const [center, setCenter] = useState<{ lat: number; lng: number }>(
     defaultCenter
   );
@@ -24,14 +28,17 @@ export default function NearYou() {
     setMounted(true);
   }, []);
 
-  const handleSearch = async () => {
-    const coords = await geocodeAddress(address);
-    if (!coords) return alert("Address not found");
+  // When location updates (from the hook), update center and nearby pubs
+  useEffect(() => {
+    if (location) {
+      setCenter(location);
+      getNearbyPubs(location.lat, location.lng).then(setNearPubs);
+    }
+  }, [location]);
 
-    setCenter(coords);
-
-    const pubsNearby = await getNearbyPubs(coords.lat, coords.lng);
-    setNearPubs(pubsNearby);
+  const handleSearch = () => {
+    if (!searchAddress.trim()) return;
+    setSubmittedAddress(searchAddress);
   };
 
   if (!mounted) return <p>Loading...</p>;
@@ -54,8 +61,8 @@ export default function NearYou() {
         {/* Search bar */}
         <div className="lg:col-start-1 lg:col-end-2 lg:row-start-1 sm:col-auto sm:row-auto h-28 flex flex-row items-center justify-center content-end">
           <input
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            value={searchAddress}
+            onChange={(e) => setSearchAddress(e.target.value)}
             placeholder="Search near you!"
             className="border p-2 w-60"
           />
