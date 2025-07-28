@@ -1,18 +1,37 @@
-export async function geocodeAddress(
-  address: string
-): Promise<google.maps.LatLngLiteral | null> {
-  const res = await fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-      address
-    )}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
-  );
-  const data = await res.json();
+import { useEffect, useState } from "react";
 
-  if (data.status === "OK") {
-    const { lat, lng } = data.results[0].geometry.location;
-    return { lat, lng };
-  } else {
-    console.warn(`Geocoding failed for address: ${address}`, data.status);
-    return null;
-  }
+export function useGeocode(address: string) {
+  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
+    null
+  );
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!address) {
+      setLocation(null);
+      setError(null);
+      return;
+    }
+
+    if (!window.google?.maps?.Geocoder) {
+      setError("Google Maps JavaScript API is not loaded");
+      setLocation(null);
+      return;
+    }
+
+    const geocoder = new window.google.maps.Geocoder();
+
+    geocoder.geocode({ address }, (results, status) => {
+      if (status === "OK" && results && results[0]) {
+        const loc = results[0].geometry.location;
+        setLocation({ lat: loc.lat(), lng: loc.lng() });
+        setError(null);
+      } else {
+        setError(`Geocode error: ${status}`);
+        setLocation(null);
+      }
+    });
+  }, [address]);
+
+  return { location, error };
 }

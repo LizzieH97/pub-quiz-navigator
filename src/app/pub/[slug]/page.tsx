@@ -15,7 +15,12 @@ import { useParams } from "next/navigation";
 
 export default function OnePub() {
   const params = useParams();
-  const pubId = Number(params.slug);
+  const slugParam = params.slug;
+
+  if (!slugParam) return <p>Loading pub...</p>;
+
+  const pubId = Number(slugParam);
+  if (isNaN(pubId)) return <p>Invalid pub ID</p>;
 
   const { allPubs } = useAllPubs();
   const { onePub, loading } = useOnePub(pubId);
@@ -29,10 +34,7 @@ export default function OnePub() {
   const isOwner = pubProfile?.pub_id === ownerId;
 
   const description = onePub.pub_user?.bio || onePub.description || "No info";
-  console.log("user.id:", user?.id);
-  console.log("user.pub_id:", user?.pub_id);
-  console.log("onePub.id:", onePub.id);
-  console.log("onePub.pub_user?.id:", onePub.pub_user?.id);
+
   switch (onePub.day) {
     case "mon":
       onePub.day = "Monday";
@@ -110,12 +112,14 @@ export default function OnePub() {
           <div className="flex flex-col text-2xl  sm:text-xl pl-4 text-cream mt-8 m-4 lg:mx-4 p-2 bg-black/30 border-8 border-teal overflow-hidden w-3/4 lg:w-full h-full ">
             <h1 className="text-4xl p-0 ">Details</h1>
             <ul className="pt-2 text-lg pl-6 flex flex-col justify-between flex-1 ">
-              {onePub.description ? (
+              {pubProfile ? (
                 <li className="list-disc ">
                   <span className="text-2xl ">{onePub.bio}</span>
                 </li>
               ) : (
-                <></>
+                <li className="list-disc ">
+                  <span className="text-2xl ">{onePub.description}</span>
+                </li>
               )}
               <li className="list-disc ">
                 Area: <span className="text-2xl">{onePub.area}</span>

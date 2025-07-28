@@ -2,7 +2,6 @@
 
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
-import { geocodeAddress } from "../lib/geocode";
 
 type Pub = {
   name: string;
@@ -35,17 +34,24 @@ export default function OnePubMap({ pub }: OnePubMapProps) {
   } | null>(null);
 
   useEffect(() => {
-    if (!pub?.address) return;
+    if (!isLoaded || !pub?.address) return;
 
-    const fetchLocation = async () => {
-      const coords = await geocodeAddress(pub.address);
-      if (coords) {
-        setLocation({ ...coords, name: pub.name });
+    const geocoder = new window.google.maps.Geocoder();
+
+    geocoder.geocode({ address: pub.address }, (results, status) => {
+      if (status === "OK" && results && results[0]) {
+        const loc = results[0].geometry.location;
+        setLocation({
+          lat: loc.lat(),
+          lng: loc.lng(),
+          name: pub.name,
+        });
+      } else {
+        console.warn(`Geocode failed for ${pub.name}: ${status}`);
+        setLocation(null);
       }
-    };
-
-    fetchLocation();
-  }, [pub]);
+    });
+  }, [pub, isLoaded]);
 
   if (!isLoaded) return <p>Loading map...</p>;
 
